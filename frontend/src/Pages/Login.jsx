@@ -43,8 +43,8 @@ function Login() {
     }, [])
 
     useEffect(() => {
-        localStorage.setItem('access', JSON.stringify(access))
-        localStorage.setItem('refresh', JSON.stringify(refresh))
+        localStorage.setItem('access', access)
+        localStorage.setItem('refresh', refresh)
     }, [access, refresh])
 
     return (

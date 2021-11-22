@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../Store/index'
 import Axios from 'axios'
+import axios from 'axios';
 
 
 
@@ -18,17 +19,24 @@ function Cart(props) {
   const totalPrice = store.reduce((prev, now) => prev + now.quantity * now.price, 0);
   const access = localStorage.getItem('access')
   const refresh = localStorage.getItem('refresh')
+  console.log(access)
   const getPurchases = () => {
     Axios.get('http://localhost:3001/purchases', {
       headers: {
-        "Authorization": `Bearer ${access}`
-        }
+        "Authorization": `Bearer ${access}`,
+        'Content-Type':'application/json'
+      }
     })
       .then((data) => {
         console.log(data)
       })
       .catch((data) => {
         console.log(data)
+        Axios.post('http://localhost:4000/token', {
+          'token': refresh
+        }).then((data) => {
+          console.log(data)
+        })
       })
   }
 

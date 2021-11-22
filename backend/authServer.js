@@ -22,6 +22,10 @@ app.delete('/logout', (req, res) => {
 app.post('/token', (req, res) => {
     const refreshToken = req.body.token;
 
+    console.log(req.body)
+
+    console.log(refreshToken,'\n\n', refreshTokens)
+
     if (refreshToken == null) {
         return res.sendStatus(401);
     }
