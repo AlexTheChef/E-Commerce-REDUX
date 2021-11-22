@@ -4,6 +4,7 @@ import Navbar from '../Components/Navbar';
 import { useSelector, useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../Store/index'
+import Axios from 'axios'
 
 
 
@@ -15,6 +16,21 @@ function Cart(props) {
   //Redux
 
   const totalPrice = store.reduce((prev, now) => prev + now.quantity * now.price, 0);
+  const access = localStorage.getItem('access')
+  const refresh = localStorage.getItem('refresh')
+  const getPurchases = () => {
+    Axios.get('http://localhost:3001/purchases', {
+      headers: {
+        "Authorization": `Bearer ${access}`
+        }
+    })
+      .then((data) => {
+        console.log(data)
+      })
+      .catch((data) => {
+        console.log(data)
+      })
+  }
 
   return (
     <div className="home-container">
@@ -47,7 +63,7 @@ function Cart(props) {
           </div>
           <hr />
           <div className='cart-buttons'>
-            <button className="home-btn" onClick={() => alert(`Checkout's working!`)}>
+            <button className="home-btn" onClick={() => getPurchases()}>
               Checkout
             </button>
             <button className="home-btn-red" onClick={() => emptyCart()}>Empty Cart</button>

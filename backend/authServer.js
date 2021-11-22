@@ -71,7 +71,7 @@ app.post('/login', async (req, res) => {
 });
 
 function generateAccessToken(user) {
-    const accessToken = jwt.sign({userId: user.id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'})
+    const accessToken = jwt.sign({userId: user.id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1m'})
     return accessToken;
 }
 
