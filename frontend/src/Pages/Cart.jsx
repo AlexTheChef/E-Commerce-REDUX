@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../Store/index'
 import Axios from 'axios'
-import axios from 'axios';
+import { useNavigate } from "react-router-dom"
 
 
 
@@ -17,26 +17,38 @@ function Cart(props) {
   //Redux
 
   const totalPrice = store.reduce((prev, now) => prev + now.quantity * now.price, 0);
-  const access = localStorage.getItem('access')
+  const navigate = useNavigate()
+
+
   const refresh = localStorage.getItem('refresh')
-  console.log(access)
   const getPurchases = () => {
+    const access = localStorage.getItem('access')
     Axios.get('http://localhost:3001/purchases', {
       headers: {
         "Authorization": `Bearer ${access}`,
-        'Content-Type':'application/json'
+        'Content-Type': 'application/json'
       }
     })
       .then((data) => {
         console.log(data)
       })
       .catch((data) => {
-        console.log(data)
         Axios.post('http://localhost:4000/token', {
           'token': refresh
-        }).then((data) => {
-          console.log(data)
         })
+          .then((data) => {
+            localStorage.setItem('access', data.data.accessToken)
+            Axios.get('http://localhost:3001/purchases', {
+              headers: {
+                "Authorization": `Bearer ${data.data.accessToken}`,
+                'Content-Type': 'application/json'
+              }
+            }).then(data => console.log('Sent!'))
+            .catch((data) => {
+              console.log(data)
+              navigate('/login')
+            })
+          })
       })
   }
 
