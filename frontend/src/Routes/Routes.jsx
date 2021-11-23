@@ -8,6 +8,7 @@ import Register from '../Pages/Register';
 import ProtectedRoute from './ProtectedRoute';
 import { useSelector } from 'react-redux'
 import Login from '../Pages/Login'
+import Dashboard from '../Pages/Dashboard';
 
 function Pages() {
 
@@ -18,6 +19,7 @@ function Pages() {
         <div>
             <Router>
                 <Routes>
+                    <Route exact path='/dashboard' element={<ProtectedRoute isAuth={logedIn} component={Dashboard} />} ></Route>
                     <Route exact path='/login' element={<Login />}></Route>
                     <Route exact path='/register' element={<Register />}></Route>
                     <Route path="*" element={<Error />}></Route>

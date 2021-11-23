@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../Store/index'
 
-
 function Navbar({ login }) {
 
     //Redux
@@ -22,11 +21,11 @@ function Navbar({ login }) {
     return (
         <nav className="navbar">
             <Link to="/" className="navbar-home">  <h3>Home</h3> </Link>
-            <div className="nav-right">
+            <div className="nav-right">              
                 {login ? <button className="nav-btn" onClick={logOut} >Log Out</button> : <span></span>}
+                <Link to="/dashboard" ><button className="nav-btn" >Dashboard</button></Link>
                 <Link to="/Cart" className="navbar-cart"> <h4>Cart</h4> </Link>
             </div>
-
         </nav>
     );
 }

@@ -18,9 +18,8 @@ function Cart(props) {
 
   const totalPrice = store.reduce((prev, now) => prev + now.quantity * now.price, 0);
   const navigate = useNavigate()
-
-
   const refresh = localStorage.getItem('refresh')
+
   const getPurchases = () => {
     const access = localStorage.getItem('access')
     Axios.get('http://localhost:3001/purchases', {
@@ -44,10 +43,50 @@ function Cart(props) {
                 'Content-Type': 'application/json'
               }
             }).then(data => console.log('Sent!'))
-            .catch((data) => {
-              console.log(data)
-              navigate('/login')
-            })
+              .catch((data) => {
+                console.log(data)
+                navigate('/login')
+              })
+          })
+      })
+  }
+
+  const sendPurchases = () => {
+    const access = localStorage.getItem('access')
+    Axios.post('http://localhost:3001/purchases', {
+      products: [store]
+    },
+      {
+        headers: {
+          "Authorization": `Bearer ${access}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+      .then((data) => {
+        console.log(data)
+        console.log(access)
+      })
+      .catch((data) => {
+        Axios.post('http://localhost:4000/token', {
+          'token': refresh
+        })
+          .then((data) => {
+            localStorage.setItem('access', data.data.accessToken)
+            Axios.post('http://localhost:3001/purchases', {
+              products: [store]
+            },
+              {
+                headers: {
+                  "Authorization": `Bearer ${data.data.accessToken}`,
+                  'Content-Type': 'application/json'
+                }
+              }
+            ).then(data => console.log('Sent!'))
+              .catch((data) => {
+                console.log(data)
+                navigate('/login')
+              })
           })
       })
   }
@@ -83,9 +122,10 @@ function Cart(props) {
           </div>
           <hr />
           <div className='cart-buttons'>
-            <button className="home-btn" onClick={() => getPurchases()}>
+            <button className="home-btn" onClick={() => sendPurchases()}>
               Checkout
             </button>
+            <button className="home-btn" onClick={() => getPurchases()}>Test refresh key</button>
             <button className="home-btn-red" onClick={() => emptyCart()}>Empty Cart</button>
           </div>
         </div>
