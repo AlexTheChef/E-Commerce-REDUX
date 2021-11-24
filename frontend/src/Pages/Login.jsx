@@ -21,7 +21,7 @@ function Login() {
     
     const login = (e) => {
         e.preventDefault()
-        Axios.post('http://localhost:4000/login', { username: username, password: password })
+        Axios.post(`${process.env.REACT_APP_AUTH_API}/login`, { username: username, password: password })
             .then((data) => {
                 const { accessToken, refreshToken } = data.data
                 setAccess(accessToken)

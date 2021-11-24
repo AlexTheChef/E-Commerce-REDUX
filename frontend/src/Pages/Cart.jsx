@@ -22,7 +22,7 @@ function Cart(props) {
 
   const getPurchases = () => {
     const access = localStorage.getItem('access')
-    Axios.get('http://localhost:3001/purchases', {
+    Axios.get(`${process.env.REACT_APP_API}/purchases`, {
       headers: {
         "Authorization": `Bearer ${access}`,
         'Content-Type': 'application/json'
@@ -32,12 +32,12 @@ function Cart(props) {
         console.log(data)
       })
       .catch((data) => {
-        Axios.post('http://localhost:4000/token', {
+        Axios.post(`${process.env.REACT_APP_AUTH_API}/token`, {
           'token': refresh
         })
           .then((data) => {
             localStorage.setItem('access', data.data.accessToken)
-            Axios.get('http://localhost:3001/purchases', {
+            Axios.get(`${process.env.REACT_APP_API}/purchases`, {
               headers: {
                 "Authorization": `Bearer ${data.data.accessToken}`,
                 'Content-Type': 'application/json'
@@ -53,7 +53,7 @@ function Cart(props) {
 
   const sendPurchases = () => {
     const access = localStorage.getItem('access')
-    Axios.post('http://localhost:3001/purchases', {
+    Axios.post(`${process.env.REACT_APP_API}/purchases`, {
       products: [store]
     },
       {
@@ -68,12 +68,12 @@ function Cart(props) {
         console.log(access)
       })
       .catch((data) => {
-        Axios.post('http://localhost:4000/token', {
+        Axios.post(`${process.env.REACT_APP_AUTH_API}/token`, {
           'token': refresh
         })
           .then((data) => {
             localStorage.setItem('access', data.data.accessToken)
-            Axios.post('http://localhost:3001/purchases', {
+            Axios.post(`${process.env.REACT_APP_API}/purchases`, {
               products: [store]
             },
               {
