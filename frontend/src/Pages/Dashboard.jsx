@@ -3,6 +3,7 @@ import Navbar from '../Components/Navbar';
 import Axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import '../App.css';
+import { useTranslation } from "react-i18next";
 
 function Dashboard() {
     const [dashboard, setDashboard] = useState([])
@@ -45,19 +46,21 @@ function Dashboard() {
             })
     }
 
+    const { t } = useTranslation();
+
     return (
         <div>
             <Navbar />
             <div>{dashboard.map((item) => (
                 <div key={item.id} >
-                    <div className="home-info ">Order ID: {item.id}</div>
+                    <div className="home-info ">{t("Order")}: {item.id}</div>
                     <div> {item.products.map((item, index) => (
                         <div key={index} className='row'>{item.map((item) => (
                             <div key={item.id} className="home-size">
                                 <div className="home-shadow">
                                 <img className="home-img" src={item.img} alt="" />
                                     <div className="home-info ">
-                                        <div>Quantity: x{item.quantity}</div>
+                                        <div>{t("Quantity")}: x{item.quantity}</div>
                                         <div>${item.price}</div>
                                         <div>{item.title}</div>
                                     </div>

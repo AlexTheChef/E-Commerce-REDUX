@@ -3,6 +3,7 @@ import Axios from 'axios'
 import '../App.css';
 import { useNavigate } from "react-router-dom"
 import Navbar from '../Components/Navbar';
+import { useTranslation } from "react-i18next";
 
 function Register() {
     const [username, setUsername] = useState('')
@@ -18,18 +19,19 @@ function Register() {
         })
     }
 
+    const { t } = useTranslation();
 
     return (
         <div className="home-container">
             <Navbar />
-            <h1>Register Here!</h1>
+            <h1>{t("Reg")}</h1>
             <form className="home-container">
-                <label>Username</label>
+                <label>{t("Username")}</label>
                 <input type='text' onChange={(e) => { setUsername(e.target.value) }} ></input>
-                <label>Password</label>
+                <label>{t("Password")}</label>
                 <input type='text' onChange={(e) => { setPassword(e.target.value) }} ></input>
                 <br/>
-                <button onClick={register}>Register</button>
+                <button onClick={register}>{t("Register")}</button>
             </form>
         </div>
     );

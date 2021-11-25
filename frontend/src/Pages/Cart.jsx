@@ -6,8 +6,7 @@ import { bindActionCreators } from 'redux'
 import { actionCreators } from '../Store/index'
 import Axios from 'axios'
 import { useNavigate } from "react-router-dom"
-
-
+import { useTranslation } from "react-i18next";
 
 function Cart(props) {
   //Redux
@@ -90,11 +89,12 @@ function Cart(props) {
           })
       })
   }
+  const { t } = useTranslation();
 
   return (
     <div className="home-container">
       <Navbar />
-      <div>{store.length === 0 && <h1>Cart is Empty</h1>}</div>
+      <div>{store.length === 0 && <h1>{t("CartIsEmpty")}</h1>}</div>
       {store.map((item) => (
         <div key={item.id} className="cart-container">
           <div className="cart-title">{item.title}</div>
@@ -114,7 +114,7 @@ function Cart(props) {
           <hr></hr>
           <div className="total-price">
             <div >
-              <strong>Total Price</strong>
+              <strong>{t("TotalPrice")}</strong>
             </div>
             <div >
               <strong>${totalPrice}</strong>
@@ -123,10 +123,10 @@ function Cart(props) {
           <hr />
           <div className='cart-buttons'>
             <button className="home-btn" onClick={() => sendPurchases()}>
-              Checkout
+            {t("Checkout")}
             </button>
-            <button className="home-btn" onClick={() => getPurchases()}>Test refresh key</button>
-            <button className="home-btn-red" onClick={() => emptyCart()}>Empty Cart</button>
+            <button className="home-btn" onClick={() => getPurchases()}>{t("Refresh")}</button>
+            <button className="home-btn-red" onClick={() => emptyCart()}>{t("Empty")}</button>
           </div>
         </div>
       )}

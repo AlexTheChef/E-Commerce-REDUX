@@ -6,6 +6,7 @@ import Navbar from '../Components/Navbar';
 import { useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../Store/index'
+import { useTranslation } from "react-i18next";
 
 function Login() {
     const [username, setUsername] = useState('')
@@ -47,19 +48,21 @@ function Login() {
         localStorage.setItem('refresh', refresh)
     }, [access, refresh])
 
+    const { t } = useTranslation();
+
     return (
         <div className="home-container">
             <Navbar />
-            <h1>Login Here!</h1>
+            <h1>{t("Login")}</h1>
             <form className="home-container">
-                <label>Username</label>
+                <label>{t("Username")}</label>
                 <input type='text' onChange={(e) => { setUsername(e.target.value) }} ></input>
-                <label>Password</label>
+                <label>{t("Password")}</label>
                 <input type='text' onChange={(e) => { setPassword(e.target.value) }} ></input>
                 <br />
-                <button onClick={login}>Login</button>
+                <button onClick={login}>{t("Log")}</button>
                 <br />
-                <Link to={'/register'}><button>Sign up</button></Link>
+                <Link to={'/register'}><button>{t("Register")}</button></Link>
             </form>
         </div>
     );

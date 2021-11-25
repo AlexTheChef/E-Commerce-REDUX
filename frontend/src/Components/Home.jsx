@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {actionCreators} from '../Store/index'
+import { actionCreators } from '../Store/index'
+import { useTranslation } from "react-i18next";
 
 function Home() {
   const { productData } = data;
@@ -19,7 +20,7 @@ function Home() {
     } else {
       params.delete("search")
     }
-    navigate({search: params.toString()})
+    navigate({ search: params.toString() })
   }, [searchTerm, navigate])
 
   //Redux
@@ -27,10 +28,12 @@ function Home() {
   const { addToCart } = bindActionCreators(actionCreators, dispatch)
   //Redux
 
+  const { t } = useTranslation();
+
   return (
     <div className="home-container">
-      <h1>All Items</h1>
-      <input className='search' onChange={e => { setSearchTerm(e.target.value) }} name='search' type='text' placeholder='Search Products' />
+      <h1>{t("AllItems")}</h1>
+      <input className='search' onChange={e => { setSearchTerm(e.target.value) }} name='search' type='text' placeholder={t("search")} />
       <section>
         <div className='home-row'>
           {productData.filter(val => {
@@ -50,13 +53,13 @@ function Home() {
                   <div className="home-info ">
                     <h5>{item.title}</h5>
                     <h5>${item.price}</h5>
-                    <button className="home-btn" onClick={() => addToCart(item)} >Add to Cart</button>
+                    <button className="home-btn" onClick={() => addToCart(item)} >{t("AddToCart")}</button>
                   </div>
                 </div>
               </div>
             )
           })}
-        </div>       
+        </div>
       </section>
     </div>
   );
