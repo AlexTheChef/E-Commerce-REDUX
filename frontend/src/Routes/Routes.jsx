@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Cart from '../Pages/Cart';
 import App from '../Pages/App'
@@ -9,8 +9,15 @@ import ProtectedRoute from './ProtectedRoute';
 import { useSelector } from 'react-redux'
 import Login from '../Pages/Login'
 import Dashboard from '../Pages/Dashboard';
+import i18n from "i18next";
 
 function Pages() {
+
+    const [language, setLanguage] = useState(localStorage.getItem('lang'))
+
+    useEffect(() => {
+        i18n.changeLanguage(language)
+    }, [language])
 
     //Redux
     const logedIn = useSelector((state) => state.isLogin)
